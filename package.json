@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "jest",
+    "test": "jest --verbose",
     "format": "prettier --write '**/*.{js,json,md}'"
   },
   "repository": {
@@ -32,5 +32,9 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 10000
   }
 }
