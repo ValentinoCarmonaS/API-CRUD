@@ -1,0 +1,36 @@
+{
+  "name": "api-crud",
+  "version": "1.0.0",
+  "description": "### Introducción",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest",
+    "format": "prettier --write '**/*.{js,json,md}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValentinoCarmonaS/API-CRUD.git"
+  },
+  "keywords": [],
+  "author": "Valentino Carmona",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValentinoCarmonaS/API-CRUD/issues"
+  },
+  "homepage": "https://github.com/ValentinoCarmonaS/API-CRUD#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^2.8.8",
+    "supertest": "^7.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0"
+  }
+}
