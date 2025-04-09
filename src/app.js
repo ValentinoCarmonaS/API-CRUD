@@ -5,14 +5,11 @@ const dbConnect = require('./config/mongo');
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
-/*
- * Here invoke the routes
- */
-
-// ALL localhost:3000/api/______
+// ALL routes localhost:3000/api/______
 app.use('/api', require('./routes/index'));
 
 app.listen(port, () => {

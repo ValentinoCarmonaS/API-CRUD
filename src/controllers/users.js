@@ -1,9 +1,35 @@
+const { usersModel } = require('../models/index');
+
 /**
  * Create a new user
  * @param {*} req
  * @param {*} res
  */
-const createUser = async (req, res) => {};
+const createUser = async (req, res) => {
+	try {
+		const body = req.body; // Get the request body
+		const data = await usersModel.create(body); // Create a new user in the database
+		res.status(201).json({
+			// Return a success response
+			message: 'User created successfully',
+			data
+		});
+	} catch (error) {
+		// Handle duplicate key error
+		if (error.code === 11000) {
+			return res.status(409).json({
+				message: 'User already exists',
+				error: error.message
+			});
+		}
+
+		// Handle other errors
+		res.status(500).json({
+			message: 'Error creating user',
+			error: error.message
+		});
+	}
+};
 
 /**
  * Read all users
@@ -12,10 +38,12 @@ const createUser = async (req, res) => {};
  */
 const readUsers = async (req, res) => {
 	try {
-		const users = await user.find();
-		res.status(200).json(users);
+		console.log('readUsers called'); // Add this line
+
+		const users = await usersModel.find(); // Find all users in the database
+		res.status(200).json({ users }); // Return the list of users
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+		res.status(500).json({ message: error.message }); // Handle any errors
 	}
 };
 
@@ -24,21 +52,82 @@ const readUsers = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const readUser = async (req, res) => {};
+const readUser = async (req, res) => {
+	try {
+		console.log('readUser called with ID:', req.params.id); // Add this line
+
+		// Get the user ID from the request parameters
+		const { id } = req.params;
+		const user = await usersModel.findById(id); // Find the user by ID
+
+		// Check if user exists
+		if (!user) {
+			return res
+				.status(404)
+				.json({ message: 'User not found' });
+		}
+
+		res.status(200).json({ user }); // Return the user data
+	} catch (error) {
+		res.status(500).json({ message: error.message }); // Handle any errors
+	}
+};
 
 /**
  * Update a user by ID
  * @param {*} req
  * @param {*} res
  */
-const updateUser = async (req, res) => {};
+const updateUser = async (req, res) => {
+	try {
+		// Get the user ID from the request parameters
+		const { id } = req.params;
+		const body = req.body; // Get the request body
+		const user = await usersModel.findByIdAndUpdate(id, body, {
+			new: true,
+			runValidators: true
+		}); // Find and update the user by ID
+
+		// Check if user exists
+		if (!user) {
+			return res
+				.status(404)
+				.json({ message: 'User not found' });
+		}
+
+		res.status(200).json({ user }); // Return the updated user data
+	} catch (error) {
+		res.status(500).json({ message: error.message }); // Handle any errors
+	}
+};
 
 /**
  * Delete a user by ID
  * @param {*} req
  * @param {*} res
  */
-const deleteUser = async (req, res) => {};
+const deleteUser = async (req, res) => {
+	try {
+		// Get the user ID from the request parameters
+		const { id } = req.params;
+		const user = await usersModel.findByIdAndDelete(id); // Find and delete the user by ID
+
+		// Check if user exists
+		if (!user) {
+			return res
+				.status(404)
+				.json({ message: 'User not found' });
+		}
+
+		// Return a success response and the deleted user data
+		res.status(200).json({
+			message: 'User deleted successfully',
+			user
+		});
+	} catch (error) {
+		res.status(500).json({ message: error.message }); // Handle any errors
+	}
+};
 
 module.exports = {
 	createUser,

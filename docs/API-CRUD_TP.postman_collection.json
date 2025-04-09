@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "28dbbfd6-35bd-45b0-ac0a-47fbbafc5c49",
+		"name": "API-CRUD_TP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43917945"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify user created successfully\", function () {",
+									"    // Verifica que el código de estado sea 201",
+									"    pm.response.to.have.status(201);",
+									"",
+									"    // Verifica que el mensaje sea el esperado",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.have.property(\"message\");",
+									"    pm.expect(responseJson.message).to.include(\"User created successfully\");",
+									"",
+									"    // Guarda el ID del usuario en una variable de entorno",
+									"    pm.environment.set(\"userId\", responseJson.data._id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{$randomFirstName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"{{$randomPassword}}\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dominio}}",
+							"host": ["{{dominio}}"]
+						},
+						"description": "### Add User\n\nThis endpoint is used to add a new user to the system.\n\n#### Request Body\n\n- `name` (string) - The name of the user.\n    \n- `email` (string) - The email address of the user.\n    \n- `password` (string) - The password for the user account.\n    \n- `role` (string) - The role of the user in the system.\n    \n\n#### Response\n\nThe response will contain the status of the request and any relevant message or data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Users list is not empty\", function () {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.users.length).to.be.greaterThan(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dominio}}",
+							"host": ["{{dominio}}"]
+						},
+						"description": "This endpoint makes an HTTP GET request to the specified domain. The request does not include a request body, and the response will contain the data based on the GET request made to the domain."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"User ID matches\", function () {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.user._id).to.eql(pm.environment.get(\"userId\"));",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dominio}}/{{userId}}",
+							"host": ["{{dominio}}"],
+							"path": ["{{userId}}"]
+						},
+						"description": "This endpoint makes an HTTP GET request to retrieve the data associated with a specific user ID. The response of this request is documented as a JSON schema."
+					},
+					"response": []
+				},
+				{
+					"name": "Put User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify user updated successfully\", function () {",
+									"    // Verifica que el código de estado sea 200",
+									"    pm.response.to.have.status(200);",
+									"",
+									"    // Verifica que la respuesta contenga el usuario actualizado",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.have.property(\"user\");",
+									"",
+									"    // Verifica que los datos del usuario sean los esperados",
+									"    pm.expect(responseJson.user.name).to.eql(\"Jane Doe\");",
+									"    pm.expect(responseJson.user.email).to.eql(\"janedoe@example.com\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"janedoe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dominio}}/{{userId}}",
+							"host": ["{{dominio}}"],
+							"path": ["{{userId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Deleted user ID matches\", function () {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.user._id).to.eql(pm.environment.get(\"userId\"));",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dominio}}/{{userId}}",
+							"host": ["{{dominio}}"],
+							"path": ["{{userId}}"]
+						},
+						"description": "This endpoint sends an HTTP DELETE request to the specified domain with the userId as a path parameter. It is used to delete a specific user identified by the id.\n\n### Response\n\nThe response of this request is a JSON schema describing the structure of the response data that will be returned upon successful deletion of the user."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
