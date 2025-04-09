@@ -1,35 +1,42 @@
 # 📚 API CRUD con Node.js y Express
 
-Una API RESTful construida con Node.js y Express que implementa el patrón de diseño MVC (Modelo-Vista-Controlador). Este proyecto permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre una base de datos, con un enfoque modular y escalable.
+Una API RESTful construida con Node.js y Express que implementa el patrón de
+diseño MVC (Modelo-Vista-Controlador). Este proyecto permite realizar
+operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre una base de datos,
+con un enfoque modular y escalable.
 
 ---
 
 ## 📋 Requisitos
 
-- **Node.js** v16+  
-- **Docker** (para ejecutar el proyecto en contenedores)  
-- **Base de datos**: Configurable según tus necesidades (MongoDB, MySQL, PostgreSQL, etc.).  
+- **Node.js** v16+
+- **Docker** (para ejecutar el proyecto en contenedores)
+- **Base de datos**: Configurable según tus necesidades (MongoDB, MySQL,
+  PostgreSQL, etc.).
 
 ---
 
 ## 🛠 Instalación
 
-1. Clona este repositorio:  
-   ```bash
-   git clone https://github.com/ValentinoCarmonaS/API-CRUD.git
-   cd API-CRUD
-   ```
+1. Clona este repositorio:
+
+      ```bash
+      git clone https://github.com/ValentinoCarmonaS/API-CRUD.git
+      cd API-CRUD
+      ```
 
 2. Construye y levanta los contenedores con Docker:
-    ```bash
-    make build
-    make up
-    ```
+
+      ```bash
+      make build
+      make up
+      ```
 
 3. Para detener y eliminar los contenedores:
-    ```bash
-    make down
-    ```
+      ```bash
+      make down
+      ```
+
 ---
 
 ## ⚙️ Variables de Entorno
@@ -40,6 +47,7 @@ Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 PORT=3000
 # Agrega aquí otras variables necesarias, como credenciales de base de datos.
 ```
+
 ---
 
 ## 🧪 Tests
