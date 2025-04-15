@@ -12,8 +12,10 @@ const port = process.env.PORT || 3000;
 // ALL routes localhost:3000/api/______
 app.use('/api', require('./routes/index'));
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
 	console.log(`\nServer is running on http://localhost:${port}\n`);
 });
 
 dbConnect();
+
+module.exports = {app, server}; // Export the server for testing purposes

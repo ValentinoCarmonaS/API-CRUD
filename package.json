@@ -9,7 +9,7 @@
 	"scripts": {
 		"start": "node src/app.js",
 		"dev": "nodemon --exec \"make format && node\" src/app.js",
-		"test": "jest --verbose",
+		"test": "jest --verbose --silent",
 		"format": "prettier --write '**/*.{js,json,md}'"
 	},
 	"repository": {
