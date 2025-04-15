@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {
+	validateUserId,
+	validateUserInfo,
+	validateUserCreation
+} = require('../middlewares/validateUser');
+
+const {
 	createUser,
 	readUsers,
 	readUser,
@@ -8,12 +14,12 @@ const {
 	deleteUser
 } = require('../controllers/users');
 
-// ALL http://localhost/api/users GET, POST, PUT, DELETE
+// ALL http://localhost:3000/api/users GET, POST, PUT, DELETE
 
-router.put('/:id', updateUser); // Update a user by ID
-router.delete('/:id', deleteUser); // Delete a user by ID
-router.post('/', createUser); // Create a new user
-router.get('/:id', readUser); // Read a user by ID
+router.put('/:id', validateUserId, validateUserInfo, updateUser); // Update a user by ID
+router.delete('/:id', validateUserId, deleteUser); // Delete a user by ID
+router.post('/', validateUserInfo, validateUserCreation, createUser); // Create a new user
+router.get('/:id', validateUserId, readUser); // Read a user by ID
 router.get('/', readUsers); // Read all users
 
 module.exports = router;

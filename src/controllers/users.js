@@ -15,18 +15,10 @@ const createUser = async (req, res) => {
 			data
 		});
 	} catch (error) {
-		// Handle duplicate key error
-		if (error.code === 11000) {
-			return res.status(409).json({
-				message: 'User already exists',
-				error: new Error('User already exists')
-			});
-		}
-
 		// Handle other errors
 		res.status(500).json({
 			message: 'Error creating user',
-			error: new Error('Error creating user')
+			error: error.message
 		});
 	}
 };
@@ -41,9 +33,9 @@ const readUsers = async (req, res) => {
 		const users = await usersModel.find(); // Find all users in the database
 		res.status(200).json({ users }); // Return the list of users
 	} catch (error) {
-		res.status(500).json({ 
+		res.status(500).json({
 			message: 'Error fetching users',
-			error: new Error('Error fetching users')
+			error: error.message
 		}); // Handle any errors
 	}
 };
@@ -61,19 +53,16 @@ const readUser = async (req, res) => {
 
 		// Check if user exists
 		if (!user) {
-			return res
-				.status(404)
-				.json({ 
-					message: 'User not found',
-					error: new Error('User not found') 
-				});
+			return res.status(404).json({
+				message: 'User not found'
+			});
 		}
 
 		res.status(200).json({ user }); // Return the user data
 	} catch (error) {
-		res.status(500).json({ 
+		res.status(500).json({
 			message: 'Error fetching user',
-			error: new Error('Error fetching user')
+			error: error.message
 		}); // Handle any errors
 	}
 };
@@ -95,20 +84,17 @@ const updateUser = async (req, res) => {
 
 		// Check if user exists
 		if (!user) {
-			return res
-				.status(404)
-				.json({ 
-					message: 'User not found',
-					error: new Error('User not found')
-				});
+			return res.status(404).json({
+				message: 'User not found'
+			});
 		}
 
 		res.status(200).json({ user }); // Return the updated user data
 	} catch (error) {
-		res.status(500).json({ 
+		res.status(500).json({
 			message: 'Error updating user',
-			error: new Error('Error updating user')
-		 }); // Handle any errors
+			error: error.message
+		}); // Handle any errors
 	}
 };
 
@@ -125,12 +111,9 @@ const deleteUser = async (req, res) => {
 
 		// Check if user exists
 		if (!user) {
-			return res
-				.status(404)
-				.json({ 
-					message: 'User not found',
-					error: new Error('User not found')
-				});
+			return res.status(404).json({
+				message: 'User not found'
+			});
 		}
 
 		// Return a success response and the deleted user data
@@ -139,10 +122,10 @@ const deleteUser = async (req, res) => {
 			user
 		});
 	} catch (error) {
-		res.status(500).json({ 
+		res.status(500).json({
 			message: 'Error deleting user',
-			error: new Error('Error deleting user')
-		 }); // Handle any errors
+			error: error.message
+		}); // Handle any errors
 	}
 };
 

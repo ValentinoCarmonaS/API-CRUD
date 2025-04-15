@@ -18,4 +18,4 @@ const server = app.listen(port, () => {
 
 dbConnect();
 
-module.exports = {app, server}; // Export the server for testing purposes
+module.exports = { app, server }; // Export the server for testing purposes
