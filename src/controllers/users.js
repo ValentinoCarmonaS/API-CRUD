@@ -19,14 +19,14 @@ const createUser = async (req, res) => {
 		if (error.code === 11000) {
 			return res.status(409).json({
 				message: 'User already exists',
-				error: error.message
+				error: new Error('User already exists')
 			});
 		}
 
 		// Handle other errors
 		res.status(500).json({
 			message: 'Error creating user',
-			error: error.message
+			error: new Error('Error creating user')
 		});
 	}
 };
@@ -38,12 +38,13 @@ const createUser = async (req, res) => {
  */
 const readUsers = async (req, res) => {
 	try {
-		console.log('readUsers called'); // Add this line
-
 		const users = await usersModel.find(); // Find all users in the database
 		res.status(200).json({ users }); // Return the list of users
 	} catch (error) {
-		res.status(500).json({ message: error.message }); // Handle any errors
+		res.status(500).json({ 
+			message: 'Error fetching users',
+			error: new Error('Error fetching users')
+		}); // Handle any errors
 	}
 };
 
@@ -54,8 +55,6 @@ const readUsers = async (req, res) => {
  */
 const readUser = async (req, res) => {
 	try {
-		console.log('readUser called with ID:', req.params.id); // Add this line
-
 		// Get the user ID from the request parameters
 		const { id } = req.params;
 		const user = await usersModel.findById(id); // Find the user by ID
@@ -64,12 +63,18 @@ const readUser = async (req, res) => {
 		if (!user) {
 			return res
 				.status(404)
-				.json({ message: 'User not found' });
+				.json({ 
+					message: 'User not found',
+					error: new Error('User not found') 
+				});
 		}
 
 		res.status(200).json({ user }); // Return the user data
 	} catch (error) {
-		res.status(500).json({ message: error.message }); // Handle any errors
+		res.status(500).json({ 
+			message: 'Error fetching user',
+			error: new Error('Error fetching user')
+		}); // Handle any errors
 	}
 };
 
@@ -92,12 +97,18 @@ const updateUser = async (req, res) => {
 		if (!user) {
 			return res
 				.status(404)
-				.json({ message: 'User not found' });
+				.json({ 
+					message: 'User not found',
+					error: new Error('User not found')
+				});
 		}
 
 		res.status(200).json({ user }); // Return the updated user data
 	} catch (error) {
-		res.status(500).json({ message: error.message }); // Handle any errors
+		res.status(500).json({ 
+			message: 'Error updating user',
+			error: new Error('Error updating user')
+		 }); // Handle any errors
 	}
 };
 
@@ -116,7 +127,10 @@ const deleteUser = async (req, res) => {
 		if (!user) {
 			return res
 				.status(404)
-				.json({ message: 'User not found' });
+				.json({ 
+					message: 'User not found',
+					error: new Error('User not found')
+				});
 		}
 
 		// Return a success response and the deleted user data
@@ -125,7 +139,10 @@ const deleteUser = async (req, res) => {
 			user
 		});
 	} catch (error) {
-		res.status(500).json({ message: error.message }); // Handle any errors
+		res.status(500).json({ 
+			message: 'Error deleting user',
+			error: new Error('Error deleting user')
+		 }); // Handle any errors
 	}
 };
 
