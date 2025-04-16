@@ -8,3 +8,7 @@ services:
       - .:/app
     environment:
       - PORT=3000
+      - DB_URI=${DB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - NODE_ENV=development
+

@@ -10,13 +10,14 @@ const createUser = async (req, res) => {
 		const body = req.body; // Get the request body
 		const data = await usersModel.create(body); // Create a new user in the database
 		res.status(201).json({
-			// Return a success response
+			success: true,
 			message: 'User created successfully',
 			data
 		});
 	} catch (error) {
 		// Handle other errors
 		res.status(500).json({
+			success: false,
 			message: 'Error creating user',
 			error: error.message
 		});
@@ -31,9 +32,13 @@ const createUser = async (req, res) => {
 const readUsers = async (req, res) => {
 	try {
 		const users = await usersModel.find(); // Find all users in the database
-		res.status(200).json({ users }); // Return the list of users
+		res.status(200).json({
+			success: true,
+			users
+		}); // Return the list of users
 	} catch (error) {
 		res.status(500).json({
+			success: false,
 			message: 'Error fetching users',
 			error: error.message
 		}); // Handle any errors
@@ -54,13 +59,18 @@ const readUser = async (req, res) => {
 		// Check if user exists
 		if (!user) {
 			return res.status(404).json({
+				success: false,
 				message: 'User not found'
 			});
 		}
 
-		res.status(200).json({ user }); // Return the user data
+		res.status(200).json({
+			success: true,
+			user
+		}); // Return the user data
 	} catch (error) {
 		res.status(500).json({
+			success: false,
 			message: 'Error fetching user',
 			error: error.message
 		}); // Handle any errors
@@ -85,13 +95,18 @@ const updateUser = async (req, res) => {
 		// Check if user exists
 		if (!user) {
 			return res.status(404).json({
+				success: false,
 				message: 'User not found'
 			});
 		}
 
-		res.status(200).json({ user }); // Return the updated user data
+		res.status(200).json({
+			success: true,
+			user
+		}); // Return the updated user data
 	} catch (error) {
 		res.status(500).json({
+			success: false,
 			message: 'Error updating user',
 			error: error.message
 		}); // Handle any errors
@@ -112,17 +127,20 @@ const deleteUser = async (req, res) => {
 		// Check if user exists
 		if (!user) {
 			return res.status(404).json({
+				success: false,
 				message: 'User not found'
 			});
 		}
 
 		// Return a success response and the deleted user data
 		res.status(200).json({
+			success: true,
 			message: 'User deleted successfully',
 			user
 		});
 	} catch (error) {
 		res.status(500).json({
+			success: false,
 			message: 'Error deleting user',
 			error: error.message
 		}); // Handle any errors

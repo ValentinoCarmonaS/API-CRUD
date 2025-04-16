@@ -1,10 +1,10 @@
 const { usersModel } = require('../models/index');
+const jwt = require('jsonwebtoken');
 
 /**
  * Function to handle user login
  * @param {*} req
  * @param {*} res
- * @returns
  */
 const loginUser = async (req, res) => {
 	try {
@@ -15,6 +15,7 @@ const loginUser = async (req, res) => {
 		const user = await usersModel.findOne({ email });
 		if (!user) {
 			return res.status(401).json({
+				success: false,
 				message: 'Invalid email or password'
 			});
 		}
@@ -23,13 +24,26 @@ const loginUser = async (req, res) => {
 		const isMatch = await user.comparePassword(password);
 		if (!isMatch) {
 			return res.status(401).json({
+				success: false,
 				message: 'Invalid email or password'
 			});
 		}
 
+		// Generate a token
+		const token = jwt.sign(
+			{
+				id: user._id,
+				role: user.role
+			},
+			process.env.JWT_SECRET,
+			{ expiresIn: '1h' }
+		);
+
 		res.status(200).json({
+			success: true,
 			message: 'Login successful',
 			data: {
+				token,
 				user: {
 					id: user._id,
 					name: user.name,
@@ -41,6 +55,7 @@ const loginUser = async (req, res) => {
 	} catch (err) {
 		// Handle other errors
 		res.status(500).json({
+			success: false,
 			message: 'Error logging in',
 			error: err.message
 		});
