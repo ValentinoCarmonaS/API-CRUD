@@ -1,0 +1,44 @@
+-"
+Recomendación: Usa la Opción 2 (script de inicialización), ya que es segura, reproducible y adecuada para un proyecto profesional. Incluye el script en tu repositorio con instrucciones claras en el README.md para mostrar a un empleador que pensaste en la configuración inicial.
+Opción 2: Crear un script de inicialización
+
+Crea un script en tu proyecto (por ejemplo, seed.js) para insertar un administrador inicial si no existe:
+javascript
+
+Copiar
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const { usersModel } = require('./models/index');
+const dbConnect = require('./config/mongo');
+
+const seedAdmin = async () => {
+  try {
+    await dbConnect();
+    const existingAdmin = await usersModel.findOne({ email: 'admin@example.com' });
+    if (existingAdmin) {
+      console.log('Admin already exists');
+      return;
+    }
+    const hashedPassword = await bcrypt.hash('your_secure_password', 10);
+    await usersModel.create({
+      name: 'Admin User',
+      email: 'admin@example.com',
+      password: hashedPassword,
+      role: 'admin'
+    });
+    console.log('Admin created successfully');
+  } catch (err) {
+    console.error('Error seeding admin:', err);
+  } finally {
+    mongoose.connection.close();
+  }
+};
+
+seedAdmin();
+Ejecuta el script una vez:
+bash
+
+Copiar
+node seed.js
+Esto asegura que haya al menos un administrador en la base de datos.
+"-

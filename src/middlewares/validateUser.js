@@ -61,6 +61,13 @@ const validateUserInfo = [
  */
 
 const validateUserId = [
+	// Check if the user ID is provided
+	param('id')
+		.exists()
+		.withMessage('User ID is required')
+		.trim()
+		.isLength({ min: 24, max: 24 })
+		.withMessage('Error invalid user ID length'),
 	// Validation rule
 	param('id').isMongoId().withMessage('Invalid user ID'),
 

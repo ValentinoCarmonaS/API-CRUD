@@ -17,7 +17,9 @@ const loginUser = async (req, res, next) => {
 		if (!user) {
 			return res.status(401).json({
 				success: false,
-				message: 'Invalid email or password'
+				message: 'Invalid email or password',
+				error: new Error('Invalid email or password')
+					.message
 			});
 		}
 
@@ -26,7 +28,9 @@ const loginUser = async (req, res, next) => {
 		if (!isMatch) {
 			return res.status(401).json({
 				success: false,
-				message: 'Invalid email or password'
+				message: 'Invalid email or password',
+				error: new Error('Invalid email or password')
+					.message
 			});
 		}
 
@@ -58,6 +62,52 @@ const loginUser = async (req, res, next) => {
 	}
 };
 
+/**
+ * Function to handle user registration
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const registerUser = async (req, res, next) => {
+	try {
+		const { name, email, password } = req.body;
+		const existingUser = await usersModel.findOne({ email });
+		if (existingUser) {
+			return res.status(400).json({
+				success: false,
+				message: 'Email already exists',
+				error: new Error('Email already exists').message
+			});
+		}
+		const user = await usersModel.create({
+			name,
+			email,
+			password
+		});
+		const token = jwt.sign(
+			{ id: user._id, role: user.role },
+			process.env.JWT_SECRET,
+			{ expiresIn: '1h' }
+		);
+		res.status(201).json({
+			success: true,
+			message: 'User registered successfully',
+			data: {
+				token,
+				user: {
+					id: user._id,
+					name,
+					email,
+					role: user.role
+				}
+			}
+		});
+	} catch (err) {
+		next(err); // Pass the error to the next middleware
+	}
+};
+
 module.exports = {
-	loginUser
+	loginUser,
+	registerUser
 };

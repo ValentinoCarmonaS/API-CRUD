@@ -12,6 +12,16 @@ const port = process.env.PORT || 3000;
 
 // ALL routes localhost:3000/api/______
 app.use('/api', require('./routes/index'));
+
+// Middleware to handle 404 errors
+app.use((req, res, next) => {
+	res.status(404).json({
+		success: false,
+		message: 'Route not found',
+		error: new Error('Route not found').message
+	});
+});
+
 app.use((err, req, res, next) => {
 	if (err) {
 		console.error(err.stack); // Log the error stack trace
