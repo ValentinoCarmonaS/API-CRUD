@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
  * Function to handle user login
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
 	try {
 		// Get the request body
 		const { email, password } = req.body;
@@ -53,12 +54,7 @@ const loginUser = async (req, res) => {
 			}
 		});
 	} catch (err) {
-		// Handle other errors
-		res.status(500).json({
-			success: false,
-			message: 'Error logging in',
-			error: err.message
-		});
+		next(err); // Pass the error to the next middleware
 	}
 };
 

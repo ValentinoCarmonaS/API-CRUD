@@ -4,8 +4,9 @@ const { usersModel } = require('../models/index');
  * Create a new user
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
 	try {
 		const body = req.body; // Get the request body
 		const data = await usersModel.create(body); // Create a new user in the database
@@ -15,12 +16,7 @@ const createUser = async (req, res) => {
 			data
 		});
 	} catch (error) {
-		// Handle other errors
-		res.status(500).json({
-			success: false,
-			message: 'Error creating user',
-			error: error.message
-		});
+		next(error); // Pass the error to the next middleware
 	}
 };
 
@@ -28,20 +24,18 @@ const createUser = async (req, res) => {
  * Read all users
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const readUsers = async (req, res) => {
+const readUsers = async (req, res, next) => {
 	try {
 		const users = await usersModel.find(); // Find all users in the database
 		res.status(200).json({
 			success: true,
+			message: 'Users fetched successfully',
 			users
 		}); // Return the list of users
 	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'Error fetching users',
-			error: error.message
-		}); // Handle any errors
+		next(error); // Pass the error to the next middleware
 	}
 };
 
@@ -49,8 +43,9 @@ const readUsers = async (req, res) => {
  * Read a user by ID
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const readUser = async (req, res) => {
+const readUser = async (req, res, next) => {
 	try {
 		// Get the user ID from the request parameters
 		const { id } = req.params;
@@ -60,20 +55,18 @@ const readUser = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({
 				success: false,
-				message: 'User not found'
+				message: 'User not found',
+				error: new Error('User not found').message
 			});
 		}
 
 		res.status(200).json({
 			success: true,
+			message: 'User fetched successfully',
 			user
 		}); // Return the user data
 	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'Error fetching user',
-			error: error.message
-		}); // Handle any errors
+		next(error); // Pass the error to the next middleware
 	}
 };
 
@@ -81,8 +74,9 @@ const readUser = async (req, res) => {
  * Update a user by ID
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
 	try {
 		// Get the user ID from the request parameters
 		const { id } = req.params;
@@ -96,20 +90,18 @@ const updateUser = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({
 				success: false,
-				message: 'User not found'
+				message: 'User not found',
+				error: new Error('User not found').message
 			});
 		}
 
 		res.status(200).json({
 			success: true,
+			message: 'User updated successfully',
 			user
 		}); // Return the updated user data
 	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'Error updating user',
-			error: error.message
-		}); // Handle any errors
+		next(error); // Pass the error to the next middleware
 	}
 };
 
@@ -117,8 +109,9 @@ const updateUser = async (req, res) => {
  * Delete a user by ID
  * @param {*} req
  * @param {*} res
+ * @param {*} next
  */
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
 	try {
 		// Get the user ID from the request parameters
 		const { id } = req.params;
@@ -128,7 +121,8 @@ const deleteUser = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({
 				success: false,
-				message: 'User not found'
+				message: 'User not found',
+				error: new Error('User not found').message
 			});
 		}
 
@@ -139,11 +133,7 @@ const deleteUser = async (req, res) => {
 			user
 		});
 	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'Error deleting user',
-			error: error.message
-		}); // Handle any errors
+		next(error); // Pass the error to the next middleware
 	}
 };
 
