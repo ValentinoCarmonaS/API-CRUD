@@ -54,10 +54,6 @@
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.13.2"
 	},
-	"jest": {
-		"testEnvironment": "node",
-		"testTimeout": 10000
-	},
 	"prettier": {
 		"semi": true,
 		"singleQuote": true,
