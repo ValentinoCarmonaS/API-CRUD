@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
 const dbConnect = require('../config/mongo');
+const { server } = require('../app');
 
 beforeAll(async () => {
 	// Connect to the database before running tests
-	await dbConnect();
+	try {
+		await dbConnect();
+	} catch (error) {
+		console.error('Failed to connect to MongoDB:', error);
+		throw error;
+	}
 });
 
 afterEach(async () => {
-	// Clean up the database after each test
-	const collections = Object.keys(mongoose.connection.collections);
-	for (const collectionName of collections) {
-		const collection =
-			mongoose.connection.collections[collectionName];
-		await collection.deleteMany();
-	}
+    await mongoose.connection.dropDatabase(); // Limpia toda la base de datos
 });
 
 afterAll(async () => {
 	// Close the connection to the database
 	await mongoose.connection.close();
+	await server.close(); // Cierra el servidor
 });

@@ -1,5 +1,5 @@
-# Dockerfile
-FROM node:23-slim
+# Dockerfile for a Node.js application
+FROM node:18
 
 # Set the working directory in the container
 WORKDIR /app
@@ -13,9 +13,5 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose the port that the app runs on
-EXPOSE 3000
-
-# Command to run the application
+# Run the application
 CMD ["npm", "start"]
-
