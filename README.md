@@ -1,83 +1,101 @@
-# 📚 API CRUD con Node.js y Express
+# API CRUD
 
-Una API RESTful construida con Node.js y Express que implementa el patrón de
-diseño MVC (Modelo-Vista-Controlador). Este proyecto permite realizar
-operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre una base de datos,
-con un enfoque modular y escalable.
+![Build Status](https://github.com/ValentinoCarmonaS/API-CRUD/actions/workflows/ci.yml/badge.svg)
+[![Code Coverage](https://img.shields.io/badge/coverage-93.75%25-brightgreen)](https://github.com/ValentinoCarmonaS/API-CRUD)
 
----
+A **RESTful API** built with **Node.js**, **Express**, and **MongoDB**, implementing the **MVC** pattern. It supports **CRUD** operations for user management and includes **JWT authentication** for secure access. Designed for scalability, thoroughly tested, and easy to deploy.
 
-## 📋 Requisitos
+## 🚀 Features
+- **CRUD Operations**: Create, read, update, and delete users.
+- **Authentication**: Secure endpoints with JWT-based authentication.
+- **MongoDB**: NoSQL database integration with MongoDB Atlas.
+- **Testing**: Comprehensive tests with Jest and Supertest (93.75% branch coverage).
+- **Docker**: Containerized setup for easy deployment.
 
+## 📋 Prerequisites
 - **Node.js** v16+
-- **Docker** (para ejecutar el proyecto en contenedores)
-- **Base de datos**: Configurable según tus necesidades (MongoDB, MySQL,
-  PostgreSQL, etc.).
+- **Docker** and **Docker Compose** (optional, for containerized setup)
+- **MongoDB Atlas** account or local MongoDB instance
 
----
+## 🛠️ Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ValentinoCarmonaS/API-CRUD.git
+   cd API-CRUD
+   ```
 
-## 🛠 Instalación
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-1. Clona este repositorio:
+3. Create a `.env` file in the root directory with:
+   ```bash
+   PORT=3000
+   MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/api-crud?retryWrites=true&w=majority
+   JWT_SECRET=your_jwt_secret
+   ```
 
-      ```bash
-      git clone https://github.com/ValentinoCarmonaS/API-CRUD.git
-      cd API-CRUD
-      ```
+## ▶️ Running the API
+- **Locally**:
+  ```bash
+  npm start
+  ```
+  The API will be available at `http://localhost:3000/api`.
 
-2. Construye y levanta los contenedores con Docker:
+- **With Docker**:
+  ```bash
+  make build
+  make up
+  ```
+  Stop containers with:
+  ```bash
+  make down
+  ```
 
-      ```bash
-      make build
-      make up
-      ```
-
-3. Para detener y eliminar los contenedores:
-      ```bash
-      make down
-      ```
-
----
-
-## ⚙️ Variables de Entorno
-
-Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-
-```bash
-PORT=3000
-# Agrega aquí otras variables necesarias, como credenciales de base de datos.
-```
-
----
-
-## 🧪 Tests
-
-Para ejecutar los tests, utiliza el siguiente comando:
-
+## 🧪 Testing
+Run tests with Docker:
 ```bash
 make test
 ```
-
----
-
-## 📂 Estructura del Proyecto
-
+Or run test with npm:
 ```bash
-/mi-proyecto
-├── /src
-│   ├── /config         # Configuraciones (conexión a DB, variables de entorno, etc.)
-│   ├── /controllers    # Lógica de negocio, funciones que procesan las solicitudes HTTP
-│   ├── /models         # Esquemas y lógica para interactuar con la base de datos
-│   ├── /routes         # Definición de endpoints y uso de Express Router
-│   ├── /middlewares    # Middlewares (autenticación, validación, manejo de errores)
-│   ├── /services       # Funciones reutilizables de negocio (opcional)
-│   ├── /utils          # Helpers y utilidades
-│   └── app.js          # Punto de entrada de la aplicación
-├── /tests              # Pruebas unitarias o de integración
-├── .env                # Variables de entorno
-├── Dockerfile          # Configuración de Docker
-├── docker-compose.yml  # Configuración de Docker Compose
-├── Makefile            # Comandos automatizados
-├── package.json        # Dependencias y scripts
-└── README.md           # Documentación general del proyecto
+npm test
 ```
+- Tests cover authentication, user CRUD, and global middleware logic.
+- Coverage: 93.75% branches, 98.64% statements.
+- View detailed reports in `coverage/lcov-report/index.html`.
+
+## 📚 API Endpoints
+- **Auth**:
+  - `POST /api/auth/register`: Register a new user.
+  - `POST /api/auth/login`: Authenticate and receive a JWT.
+- **Users** (JWT required):
+  - `GET /api/users`: List all users.
+  - `GET /api/users/:id`: Get a user by ID.
+  - `POST /api/users`: Create a user.
+  - `PUT /api/users/:id`: Update a user.
+  - `DELETE /api/users/:id`: Delete a user.
+
+For detailed endpoint documentation, refer to the [API specification](docs/api-spec.md).
+
+## 🗂️ Project Structure
+```
+API-CRUD/
+├── src/
+│   ├── config/         # Database and environment setup
+│   ├── controllers/    # Business logic for endpoints
+│   ├── middlewares/    # Authentication and validation
+│   ├── models/         # MongoDB schemas
+│   ├── routes/         # API endpoint definitions
+│   ├── tests/          # Jest and Supertest tests
+│   └── app.js          # Express app setup
+├── .env                # Environment variables
+├── Dockerfile          # Docker configuration
+├── docker-compose.yml  # Docker Compose setup
+├── Makefile            # Automation scripts
+└── package.json        # Dependencies and scripts
+```
+
+## 📜 License
+[MIT](LICENSE)
