@@ -4,8 +4,8 @@ module.exports = {
 	// Entorno de pruebas (Node.js para una API)
 	testEnvironment: 'node',
 
-	// Tiempo máximo por prueba (10 segundos, útil para MongoDB)
-	testTimeout: 10000,
+	// Tiempo máximo por prueba (330 segundos, útil para MongoDB)
+	testTimeout: 30000,
 
 	// Archivos de setup que se ejecutan después de configurar el entorno
 	setupFilesAfterEnv: ['./src/tests/setup.js'],
