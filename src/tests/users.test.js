@@ -18,18 +18,20 @@ describe('Users Endpoints', () => {
 		token = jwt.sign(
 			{ id: user._id, role: user.role },
 			process.env.JWT_SECRET,
-			{
-				expiresIn: '1h'
-			}
+			{ expiresIn: '1h' }
 		);
-	});
+	}, 30000); // 30 segundos
 
 	afterEach(async () => {
 		// Elimina usuarios adicionales, pero preserva el de beforeAll
 		await usersModel.deleteMany({
 			email: { $ne: 'admin@example.com' }
 		});
-	});
+	}, 30000); // 30 segundos
+
+	afterAll(async () => {
+		await usersModel.deleteMany({});
+	}, 30000); // 30 segundos
 
 	it('should create a new user', async () => {
 		const res = await request(app)
