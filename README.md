@@ -1,7 +1,7 @@
 # API CRUD
 
 ![Build Status](https://github.com/ValentinoCarmonaS/API-CRUD/actions/workflows/ci.yml/badge.svg)
-[![Code Coverage](https://img.shields.io/badge/coverage-93.75%25-brightgreen)](https://github.com/ValentinoCarmonaS/API-CRUD)
+[![Codecov](https://codecov.io/gh/ValentinoCarmonaS/API-CRUD/branch/main/graph/badge.svg)](https://codecov.io/gh/ValentinoCarmonaS/API-CRUD)
 
 A **RESTful API** built with **Node.js**, **Express**, and **MongoDB**, implementing the **MVC** pattern. It supports **CRUD** operations for user management and includes **JWT authentication** for secure access. Designed for scalability, thoroughly tested, and easy to deploy.
 
