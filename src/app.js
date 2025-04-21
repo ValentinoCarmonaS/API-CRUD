@@ -22,9 +22,9 @@ app.use((req, res, next) => {
 	});
 });
 
+// Middleware to handle errors
 app.use((err, req, res, next) => {
 	if (err) {
-		console.error(err.stack); // Log the error stack trace
 		res.status(err.status || 500).json({
 			success: false,
 			message: 'Internal Server Error',

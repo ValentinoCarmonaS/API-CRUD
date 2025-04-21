@@ -13,7 +13,13 @@ const createUser = async (req, res, next) => {
 		res.status(201).json({
 			success: true,
 			message: 'User created successfully',
-			data
+			// Return the created user data, excluding the password
+			data: {
+				_id: data._id,
+				name: data.name,
+				email: data.email,
+				role: data.role
+			}
 		});
 	} catch (error) {
 		next(error); // Pass the error to the next middleware

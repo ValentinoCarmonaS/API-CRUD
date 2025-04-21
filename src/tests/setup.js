@@ -12,11 +12,8 @@ beforeAll(async () => {
 	}
 });
 
-afterEach(async () => {
-    await mongoose.connection.dropDatabase(); // Limpia toda la base de datos
-});
-
 afterAll(async () => {
+	await mongoose.connection.dropDatabase(); // Limpia toda la base de datos
 	// Close the connection to the database
 	await mongoose.connection.close();
 	await server.close(); // Cierra el servidor

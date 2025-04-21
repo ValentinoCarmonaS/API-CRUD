@@ -73,14 +73,7 @@ const registerUser = async (req, res, next) => {
 		const { name, email, password } = req.body;
 		const existingUser = await usersModel.findOne({ email });
 		// Check if the user already exists, is in the validation middleware
-		// This is a duplicate check
-		if (existingUser) {
-			return res.status(400).json({
-				success: false,
-				message: 'Email already exists',
-				error: new Error('Email already exists').message
-			});
-		}
+
 		const user = await usersModel.create({
 			name,
 			email,

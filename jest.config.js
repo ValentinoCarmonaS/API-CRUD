@@ -1,3 +1,5 @@
+const { run } = require('jest');
+
 module.exports = {
 	// Entorno de pruebas (Node.js para una API)
 	testEnvironment: 'node',
@@ -22,6 +24,9 @@ module.exports = {
 
 	// Limpiar mocks automáticamente entre pruebas
 	clearMocks: true,
+
+	// Ejecutar pruebas secuencialmente
+	maxWorkers: 1,
 
 	// Configuración de cobertura
 	collectCoverage: true,
