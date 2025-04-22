@@ -40,10 +40,9 @@
 	},
 	"homepage": "https://github.com/ValentinoCarmonaS/API-CRUD#readme",
 	"devDependencies": {
-		"codecov": "^3.8.3",
 		"jest": "^29.7.0",
 		"nodemon": "^3.1.9",
-		"prettier": "^2.8.8",
+		"prettier": "^3.3.3",
 		"supertest": "^7.1.0"
 	},
 	"dependencies": {
@@ -65,5 +64,8 @@
 		"trailingComma": "none",
 		"arrowParens": "avoid",
 		"proseWrap": "always"
+	},
+	"engines": {
+		"node": ">=18.0.0"
 	}
 }

@@ -159,8 +159,12 @@ describe('Users Endpoints', () => {
 		expect(res.body.success).toBe(false);
 		expect(res.body.message).toBe('Validation failed');
 		expect(res.body.errors[0].msg).toBe('Invalid email format');
-		expect(res.body.errors[1].msg).toBe('Password must be at least 6 characters long');
-		expect(res.body.errors[2].msg).toBe('Password must contain at least one number');
+		expect(res.body.errors[1].msg).toBe(
+			'Password must be at least 6 characters long'
+		);
+		expect(res.body.errors[2].msg).toBe(
+			'Password must contain at least one number'
+		);
 	});
 
 	it('should handle internal server error during user creation', async () => {
@@ -193,9 +197,11 @@ describe('Users Endpoints', () => {
 	});
 
 	it('should handle database failure in user read', async () => {
-		jest.spyOn(usersModel, 'findById').mockImplementationOnce(() => {
-			throw new Error('Database connection failed');
-		});
+		jest.spyOn(usersModel, 'findById').mockImplementationOnce(
+			() => {
+				throw new Error('Database connection failed');
+			}
+		);
 		const res = await request(app)
 			.get('/api/users/507f1f77bcf86cd799439011')
 			.set('Authorization', `Bearer ${token}`);
@@ -205,7 +211,10 @@ describe('Users Endpoints', () => {
 	});
 
 	it('should handle database failure in user update', async () => {
-		jest.spyOn(usersModel, 'findByIdAndUpdate').mockImplementationOnce(() => {
+		jest.spyOn(
+			usersModel,
+			'findByIdAndUpdate'
+		).mockImplementationOnce(() => {
 			throw new Error('Database connection failed');
 		});
 		const res = await request(app)
@@ -218,7 +227,10 @@ describe('Users Endpoints', () => {
 	});
 
 	it('should handle database failure in user delete', async () => {
-		jest.spyOn(usersModel, 'findByIdAndDelete').mockImplementationOnce(() => {
+		jest.spyOn(
+			usersModel,
+			'findByIdAndDelete'
+		).mockImplementationOnce(() => {
 			throw new Error('Database connection failed');
 		});
 		const res = await request(app)
