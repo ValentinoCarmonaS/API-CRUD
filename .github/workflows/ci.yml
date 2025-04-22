@@ -19,29 +19,18 @@ jobs:
 
       - name: 🧪 Setup .env
         run: |
-          echo "PORT=3000" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
           echo "NODE_ENV=test" >> .env
-          echo "MONGO_URI=${{ secrets.MONGODB_URI }}" >> .env
+          echo "DB_URI=${{ secrets.DB_URI }}" >> .env
+          echo "DB_URI_TEST=${{ secrets.DB_URI_TEST }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }}" >> .env
 
       - name: 🐳 Build Docker image
         run: make build
-        env:
-          PORT: 3000
-          NODE_ENV: test
-          MONGO_URI: ${{ secrets.MONGODB_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Run tests
         run: make test
-        env:
-          PORT: 3000
-          NODE_ENV: test
-          MONGO_URI: ${{ secrets.MONGODB_URI }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 📦 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
