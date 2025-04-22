@@ -28,6 +28,12 @@ jobs:
 
       - name: 🧪 Run tests
         run: make test
+        env:
+          PORT: 3000
+          NODE_ENV: test
+          MONGO_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 📦 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
