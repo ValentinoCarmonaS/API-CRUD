@@ -1,18 +1,11 @@
-# Dockerfile for a Node.js application
-FROM node:18
+# Dockerfile
 
-# Set the working directory in the container
-WORKDIR /app
+FROM node:16-slim
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json ./
-COPY package-lock.json ./
-
-# Install dependencies
+WORKDIR /usr/src/app
+COPY package.json package-lock.json* ./
 RUN npm install
 
-# Copy the rest of the application code to the working directory
 COPY . .
-
-# Run the application
+EXPOSE ${PORT}
 CMD ["npm", "start"]
