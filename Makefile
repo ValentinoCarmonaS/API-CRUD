@@ -20,7 +20,10 @@ down: ## Stops and removes the containers. (with Docker)
 
 test: ## Runs the tests. (with Docker)
 	@echo "Running tests..."
-	NODE_ENV=test $(DOCKER_COMPOSE) run --rm api npm test
+	NODE_ENV=test $(DOCKER_COMPOSE) run --rm \
+		-v "$(PWD)/coverage:/usr/src/app/coverage" \
+		-e NODE_ENV=test \
+		api npm test
 
 format: ## Formats the code using Prettier.
 	@echo "Formatting code..."
