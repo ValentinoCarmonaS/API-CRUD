@@ -17,6 +17,14 @@ jobs:
       - name: ⚙️ Set up Docker
         uses: docker/setup-buildx-action@v3
 
+      - name: 🧪 Setup .env
+        run: |
+          echo "PORT=3000" >> .env
+          echo "NODE_ENV=test" >> .env
+          echo "MONGO_URI=${{ secrets.MONGODB_URI }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }}" >> .env
+
       - name: 🐳 Build Docker image
         run: make build
         env:
