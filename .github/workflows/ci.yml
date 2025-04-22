@@ -19,6 +19,12 @@ jobs:
 
       - name: 🐳 Build Docker image
         run: make build
+        env:
+          PORT: 3000
+          NODE_ENV: test
+          MONGO_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 🧪 Run tests
         run: make test
