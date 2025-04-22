@@ -1,6 +1,6 @@
 # Makefile
 
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = docker compose
 NPM = npm
 NODE_ENV ?= development
 
