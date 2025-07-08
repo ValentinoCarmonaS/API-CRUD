@@ -20,8 +20,8 @@ const options = {
 		},
 		servers: [
 			{
-				url: 'http://localhost:3000',
-				description: 'Servidor de desarrollo'
+				url: process.env.DEPLOYMENT_URL,
+				description: 'Servidor de producción'
 			}
 		],
 		components: {

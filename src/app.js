@@ -5,7 +5,10 @@ const dbConnect = require('./config/mongo');
 const { swaggerUi, specs } = require('../swagger/swagger');
 const app = express();
 
-app.use(cors());
+app.use(cors({
+	origin: process.env.DEPLOYMENT_URL,
+	credentials: true
+}));
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
@@ -35,9 +38,7 @@ app.use((err, req, res, next) => {
 	}
 });
 
-const server = app.listen(port, () => {
-	console.log(`\nServer is running on http://localhost:${port}\n`);
-});
+const server = app.listen(port);
 
 dbConnect();
 
