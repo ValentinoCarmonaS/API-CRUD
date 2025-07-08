@@ -2,15 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const dbConnect = require('./config/mongo');
-const e = require('express');
+const { swaggerUi, specs } = require('../swagger/swagger');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const port = process.env.PORT || 3000;
 
-// ALL routes localhost:3000/api/______
 app.use('/api', require('./routes/index'));
 
 // Middleware to handle 404 errors
