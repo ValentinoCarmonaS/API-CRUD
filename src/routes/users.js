@@ -25,7 +25,7 @@ router.post(
 	validateUserCreation,
 	createUser
 ); // Create a new user
-router.get('/:id', validateUserId, readUser); // Read a user by ID
-router.get('/', readUsers); // Read all users
+router.get('/:id', authenticate, validateUserId, readUser); // Read a user by ID
+router.get('/', authenticate, readUsers); // Read all users
 
 module.exports = router;
