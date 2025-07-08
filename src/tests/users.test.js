@@ -67,7 +67,7 @@ describe('Users Endpoints', () => {
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toBe(200);
 		expect(res.body.success).toBe(true);
-		expect(res.body.user._id).toBe(userId.toString());
+		expect(res.body.user.id).toBe(userId.toString());
 	});
 
 	it('should update a user by ID', async () => {
